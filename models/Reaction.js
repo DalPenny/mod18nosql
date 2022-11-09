@@ -1,9 +1,12 @@
-const mongoose = require('mongoose');
+
+const { Schema, model } = require('mongoose');
+
+// const thoughtSchema = require('./Thought');
 const { format_date } = require('../utils/helpers');
 
-const reactionSchema = new mongoose.Schema({
+const reactionSchema = new Schema({
     reactionId: {
-        type: mongoose.Schema.Types.ObjectId(),
+        type: Schema.Types.ObjectId(),
       default: new Types.ObjectId(),
     },
 
@@ -23,7 +26,7 @@ const reactionSchema = new mongoose.Schema({
         default: Date.now,
         get: (createdAtVal) => format_date(createdAtVal)
     },
-    reactions: [thoughtSchema],
+    reaction: [thoughtSchema],
 },
 
     {
@@ -35,6 +38,6 @@ const reactionSchema = new mongoose.Schema({
 )
 
 // Initialize our reaction model
-const Reaction = mongoose.model('reaction', reactionSchema);
+const Reaction = model('reaction', reactionSchema);
 
 module.exports = Reaction;

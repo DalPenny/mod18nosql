@@ -1,7 +1,10 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
+
+// const reactionSchema = require('./Reaction');
 const { format_date } = require('../utils/helpers');
 
-const thoughtSchema = new mongoose.Schema({
+const thoughtSchema = new Schema({
     thoughtText: {
         type: String,
         required: true,
@@ -15,12 +18,16 @@ const thoughtSchema = new mongoose.Schema({
         get: (createdAtVal) => format_date(createdAtVal)
     },
 
+
     username: {
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'user',
     },
 
-    reactions: [reactionSchema],
+    reactions: [{
+        type: Schema.Types.ObjectId,
+        ref: 'reaction',
+    }],
 },
 
     {
@@ -38,6 +45,6 @@ thoughtSchema.virtual('reactionCount').get(function () {
 });
 
 // Initialize our thought model
-const Thought = mongoose.model('thought', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;

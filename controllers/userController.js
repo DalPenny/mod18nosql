@@ -3,6 +3,7 @@ const User = require('../models/User');
 module.exports = {
   getUser(req, res) {
     User.find()
+    .populate({path:"friends", select:"__v -thought"})
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
