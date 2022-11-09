@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
+//schema to create user model
 const userSchema = new mongoose.Schema({
-    user: {
+    username: {
         type: String,
         unique: true,
         required: true,
@@ -35,14 +36,14 @@ const userSchema = new mongoose.Schema({
     id: false,
 },
 
-)
+);
 
-//creat virtual property "friendcount" that gets the number of friends per user
+//create virtual property "friendcount" that gets the number of friends per user
 userSchema.virtual('friendCount').get(function() {
     return this.friends.length;
 });
 
-// Initialize our user model
-const User = model('user', userSchema);
+// Create our User model
+const User = mongoose.model("user", userSchema);
 
 module.exports = User;
