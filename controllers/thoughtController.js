@@ -1,5 +1,4 @@
-const Thought = require('../models/Thought');
-// const User = require('../models/User');
+const { User, Thought } = require('../models');
 
 module.exports = {
   getThought(req, res) {
@@ -30,12 +29,12 @@ module.exports = {
             { new: true }
         );
       })
-      .then((dbUserData) => {
-        if (!dbUserData) {
+      .then((User) => {
+        if (!User) {
             res.status(404).json({ message: "User ID not found!"});
             return;
         }
-        res.json(dbUserData);
+        res.json(User);
       })
 
       .catch((err) => res.status(500).json(err));
