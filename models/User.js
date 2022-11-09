@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        match: true,
+        match: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
     },
 //forign key to track Thoughts, array of objectids refers to Thoughts
     thoughts: [{

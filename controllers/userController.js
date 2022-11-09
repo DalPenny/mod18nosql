@@ -3,7 +3,7 @@ const User = require('../models/User');
 module.exports = {
   getUser(req, res) {
     User.find()
-      .then((users) => res.json(users))
+      .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
   //get user by id
@@ -24,9 +24,16 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
+   // update a user
+   updateUser(req, res) {
+    User.findOneAndUpdate(req.body)
+      .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.status(500).json(err));
+  },
+
    // delete a user
    deleteUser(req, res) {
-    User.delete(req.body)
+    User.findOneAndDelete(req.body)
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
