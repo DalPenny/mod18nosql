@@ -1,7 +1,8 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
+
 
 //schema to create user model
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     username: {
         type: String,
         unique: true,
@@ -15,35 +16,39 @@ const userSchema = new mongoose.Schema({
         unique: true,
         match: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
     },
-//forign key to track Thoughts, array of objectids refers to Thoughts
-    thoughts: [{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "Thought"
-    }],
+    //forign key to track Thoughts, array of objectids refers to Thoughts
+    thoughts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'thought'
+        }
+    ],
 
-//forign key to track friends(user), array of objectids refers to Users
-    friends: [{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "User"
-    }],
+    //forign key to track friends(user), array of objectids refers to Users (Unit 23)
+    friends: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'user'
+        }
+    ],
 },
 
-{
-    toJSON: {
-        getters: true,
-        virtuals: true, //virtuals to include in JSON
+    {
+        toJSON: {
+            getters: true,
+            virtuals: true, //virtuals to include in JSON
+        },
+        id: false,
     },
-    id: false,
-},
 
 );
 
 //create virtual property "friendcount" that gets the number of friends per user
-userSchema.virtual('friendCount').get(function() {
+userSchema.virtual('friendCount').get(function () {
     return this.friends.length;
 });
 
 // Create our User model
-const User = mongoose.model("user", userSchema);
+const User = model("user", userSchema);
 
 module.exports = User;
