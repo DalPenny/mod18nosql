@@ -1,4 +1,4 @@
-const { User, Thought } = require('../models');
+const { User, Thought, Reaction } = require('../models');
 
 module.exports = {
   getThought(req, res) {
@@ -40,17 +40,38 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-   //update a thought
-   updateThought(req, res) {
-    Thought.findOneAndUpdate(req.body)
-      .then((dbThoughtData) => res.json(dbThoughtData))
-      .catch((err) => res.status(500).json(err));
-  },
-
  // delete a thought
    deleteThought(req, res) {
     Thought.findOneAndDelete(req.body)
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => res.status(500).json(err));
   },
+
+  // Update a specific Thought and its contents in the body (Unit 28)
+  updateThought(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((dbThoughtData) =>
+        !dbThoughtData
+          ? res.status(404).json({ message: 'No thought with this id!' })
+          : res.json(dbThoughtData)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+
+    //when deleting a thought will delete assocsiated reaction to the thought (Unit 28)
+    deleteThought(req, res) {
+        Thought.findOneAndDelete({ _id: req.params.thoughtId })
+          .then((dbThoughtData) =>
+            !dbThoughtData
+              ? res.status(404).json({ message: 'No thought with that ID' })
+              : Reaction.deleteMany({ _id: { $in: dbThoughtData.thoughtId } })
+          )
+          .then(() => res.json({ message: 'Thought and reactions associated to it have been deleted!' }))
+          .catch((err) => res.status(500).json(err));
+      },
+
 };

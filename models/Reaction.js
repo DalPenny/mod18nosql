@@ -6,8 +6,8 @@ const { format_date } = require('../utils/helpers');
 
 const reactionSchema = new Schema({
     reactionId: {
-        type: Schema.Types.ObjectId(),
-      default: new Types.ObjectId(),
+        type: Schema.Types.ObjectId,  //Unit 26
+        default: () => new Types.ObjectId(),
     },
 
     reactionBody: {
@@ -17,8 +17,8 @@ const reactionSchema = new Schema({
     },
 
     username: {
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'user',
     },
 
     createdAt: {
@@ -26,7 +26,12 @@ const reactionSchema = new Schema({
         default: Date.now,
         get: (createdAtVal) => format_date(createdAtVal)
     },
-    reaction: [thoughtSchema],
+
+    reaction: [{
+        type: Schema.Types.ObjectId,
+        ref: "Thought"
+    }],
+
 },
 
     {
