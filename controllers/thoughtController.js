@@ -59,7 +59,12 @@ module.exports = {
           .then((dbThoughtData) =>
             !dbThoughtData
               ? res.status(404).json({ message: 'No thought with that ID' })
-              : Reaction.deleteMany({ _id: { $in: dbThoughtData.thoughtId } })
+              // pull the thought id from user thoughts column
+              : User.findOneAndUpdate(
+                { thoughts: req.params.thoughtId },
+                { $pull: { thoughts: req.params.thoughtId } },
+                { new: true }
+              )
           )
           .then(() => res.json({ message: 'Thought and reactions associated to it have been deleted!' }))
           .catch((err) => res.status(500).json(err));
@@ -69,7 +74,8 @@ module.exports = {
 addThoughtReaction(req, res) {
   Thought.findOneAndUpdate(
     { _id: req.params.thoughtId },
-    { $addToSet: { reaction: req.body } },
+    //only allows same id once (Unit 26)
+    { $addToSet: { reactions: req.body } },
     { runValidators: true, new: true }
   )
     .then((thought) =>
@@ -79,6 +85,7 @@ addThoughtReaction(req, res) {
     )
     .catch((err) => res.status(500).json(err));
 },
+
 // Remove thought reaction
 removeThoughtReaction(req, res) {
   Thought.findOneAndUpdate(
