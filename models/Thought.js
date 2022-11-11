@@ -19,15 +19,15 @@ const thoughtSchema = new Schema({
     },
 
 
-    username: {
-        type: Schema.Types.ObjectId,
-        ref: 'user',
-    },
-
     // username: {
-    //     type: String,
-    //     required: true,
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'user',
     // },
+
+    username: {
+        type: String,
+        required: true,
+    },
 
     // reactions: [{
     //     type: Schema.Types.ObjectId,
