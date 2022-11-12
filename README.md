@@ -8,6 +8,7 @@
   * [Usage](#usage)
   * [Contributing](#contributing)
   * [Tests](#tests)
+  * [Video](#video)
   * [Github](#github)
   * [Email Address](#email)
   * [Licenses](#licenses)
@@ -28,7 +29,10 @@
   add things as needed
   
   ## Tests
-  Using insomnia, make folders for users (GET: get all user/ POST: add User/ GET: find user by id, PUT: update user, DEL: Delete user), friends (POST: add friends, PUT: remove friends) and thoughts (GET: Get all thoughts, POST create thoughts, GET: get thought by ID, PUT, update thought
+  Using insomnia, make folders for users (GET: get all user/ POST: add User/ GET: find user by id, PUT: update user, DEL: Delete user), friends (POST: add friends, PUT: remove friends), thoughts (GET: Get all thoughts, POST create thoughts, GET: get thought by ID, PUT, update thought, DEL: Delete thought), and Reactions (POST: create reaction, DEL: remove reaction)
+  
+  ## Video
+   ! [video of nosql backend](https://drive.google.com/file/d/15eQKUE-CRnms76O3Fcsr-KyFytVEvaLQ/view)
   
   ## Github
   Have questions about this project?  
